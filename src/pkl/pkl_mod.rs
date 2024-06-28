@@ -40,10 +40,12 @@ mod codegen {
         ///
         /// # Usage
         /// ```rust no_run
+        /// use std::path::PathBuf;
+        ///
         /// fn main() {
         ///     let mut evaluator = pkl_rs::api::evaluator::Evaluator::new().unwrap();
-        ///     let pkl_mod = evaluator.evaluate_module(PathBuf::from("path/to/your/file.pkl")).unwrap()");
-        ///     pkl_mod.codegen().unwrap
+        ///     let pkl_mod = evaluator.evaluate_module(PathBuf::from("path/to/your/file.pkl")).unwrap();
+        ///     pkl_mod.codegen().unwrap()
         /// }
         /// ```
         ///
