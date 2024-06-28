@@ -1,4 +1,4 @@
-use api::deserializer::Deserializer;
+use pkl::Deserializer;
 use pkl::PklSerialize;
 
 pub mod api;
@@ -15,13 +15,13 @@ use tracing::{debug, error, span, trace, Level};
 #[cfg(feature = "trace")]
 use tracing_subscriber::FmtSubscriber;
 
-/// Evaluates a `.pkl` file and interprets it as `T`
+/// Evaluates a `.pkl` file and deserializes it as `T`.
 ///
 /// `path`: The path to the `.pkl` file
 ///
 /// # Example
 ///
-/// ```pkl
+/// ```ignore
 /// ip = "127.0.0.1"
 /// database {
 ///     username = "root"
@@ -30,6 +30,7 @@ use tracing_subscriber::FmtSubscriber;
 /// ```
 /// -------------
 /// ```rust ignore
+/// use serde::Deserialize;
 ///
 /// #[derive(Deserialize)]
 /// struct Config {
@@ -44,7 +45,10 @@ use tracing_subscriber::FmtSubscriber;
 /// }
 ///
 /// # Usage inside function
-/// # let config: Database = pkl_rs::from_config("config.pkl")?;
+/// # fn main() -> Result<(), rpkl::Error> {
+/// #    let config: Database = rpkl::from_config("config.pkl")?;
+/// #    Ok(())
+/// # }
 /// ```
 pub fn from_config<T>(path: impl AsRef<std::path::Path>) -> Result<T>
 where

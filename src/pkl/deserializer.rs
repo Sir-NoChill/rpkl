@@ -5,7 +5,7 @@ use serde::de::{
     self, DeserializeSeed, EnumAccess, IntoDeserializer, MapAccess, SeqAccess, VariantAccess,
     Visitor,
 };
-use serde::{forward_to_deserialize_any, Deserialize};
+use serde::forward_to_deserialize_any;
 
 #[cfg(feature = "trace")]
 use tracing::{debug, error, span, trace, Level};
@@ -26,15 +26,6 @@ impl<'de> Deserializer<'de> {
         Deserializer { map }
     }
 }
-
-pub fn from_pkl_map<'a, T>(map: &'a HashMap<String, PklValue>) -> Result<T>
-where
-    T: Deserialize<'a>,
-{
-    T::deserialize(&mut Deserializer::from_pkl_map(&map))
-}
-
-// impl<'de> Deserializer<'de> {}
 
 impl<'de, 'a> de::Deserializer<'de> for &'a mut Deserializer<'de> {
     type Error = Error;
@@ -334,10 +325,6 @@ impl<'de, 'a> VariantAccess<'de> for Enum<'a, 'de> {
     }
 }
 
-/*
-
-*/
-
 #[cfg(test)]
 mod tests {
 
@@ -350,6 +337,7 @@ mod tests {
         use super::*;
         use pkl::PklSerialize;
         use rmpv::Value;
+        use serde::Deserialize;
 
         #[cfg(feature = "dhat-heap")]
         let _profiler = dhat::Profiler::new_heap();
@@ -371,7 +359,7 @@ mod tests {
         let ast = Value::Array(vec![
             Value::Integer(1.into()),
             Value::String("example".into()),
-            Value::String("file:///Users/testing/pkl-rs/examples/example.pkl".into()),
+            Value::String("file:///Users/testing/rpkl/examples/example.pkl".into()),
             Value::Array(vec![
                 Value::Array(vec![
                     Value::Integer(16.into()),
