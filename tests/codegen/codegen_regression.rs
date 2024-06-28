@@ -67,4 +67,14 @@ mod tests {
 
         pkl_mod.codegen().expect("failed to codegen");
     }
+
+    #[test]
+    #[cfg(feature = "codegen")]
+    fn test_listing() {
+        let mut evaluator = pkl_rs::api::evaluator::Evaluator::new().expect("failed to initialize evaluator");
+        let pkl_mod = evaluator.evaluate_module(
+            PathBuf::from("tests/codegen/pkl_files/local/listing.pkl")).expect("failed to evaluate");
+
+        pkl_mod.codegen().expect("failed to codegen");
+    }
 }
