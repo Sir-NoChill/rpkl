@@ -29,9 +29,7 @@ use tracing_subscriber::FmtSubscriber;
 /// }
 /// ```
 /// -------------
-/// ```no_run
-///
-/// use serde::Deserialize;
+/// ```rust ignore
 ///
 /// #[derive(Deserialize)]
 /// struct Config {
@@ -45,10 +43,8 @@ use tracing_subscriber::FmtSubscriber;
 ///     password: String,
 /// }
 ///
-/// # fn main() -> Result<(), rpkl::Error> {
-/// let config: Database = rpkl::from_config("config.pkl")?;
-/// #    Ok(())
-/// # }
+/// # Usage inside function
+/// # let config: Database = pkl_rs::from_config("config.pkl")?;
 /// ```
 pub fn from_config<T>(path: impl AsRef<std::path::Path>) -> Result<T>
 where

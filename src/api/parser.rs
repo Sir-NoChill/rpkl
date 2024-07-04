@@ -164,6 +164,8 @@ fn parse_primitive_member(value: &rmpv::Value) -> Result<PklPrimitive> {
                 return Err(Error::ParseError(format!("expected integer, got {:?}", n)));
             }
         }
+        rmpv::Value::F32(f) => Ok(PklPrimitive::Float(*f as f64)),
+        rmpv::Value::F64(f) => Ok(PklPrimitive::Float(*f)),
         _ => {
             todo!("parse other primitive types. value: {}", value);
         }
@@ -210,8 +212,7 @@ fn parse_pkl_obj_member(data: &[rmpv::Value]) -> Result<ObjectMember> {
 /// this function is used to parse dynmically typed listings
 
 /// i.e:
-///
-/// ```ignore
+/// ```pkl
 /// birds = new {
 ///  "Pigeon"
 ///  "Hawk"
